@@ -4,14 +4,14 @@ The folding rules for a language are specified in its "language-configuration.js
 ```json
     "patternFolding": {
         "rules": [
-            { /* rule1 */ },
-            { /* rule2 */ },
-            // ...
+            { ... },
+            { ... },
+            ...
         ]
-    },
+    }
 ```
 
-The examples below illustrate a number of ways to specify folding rules. Most examples are for the "C" language. At the end there is a full example for "C".
+The examples below illustrate a number of ways to specify folding rules. Most examples are for the "C" language. At the end there is a combined example for "C".
 
 Familiarity with regular expressions is assumed for these examples.
 
@@ -42,7 +42,7 @@ This example uses regular expressions to allow for a number of ways that "region
 
 The double `\\` in the example allows for these being literals in a json file. The parsing of the quoted json value will convert each `\\` to a single `\` in the actual regular expression.
 
-This example also adds the `"type"` parameter. This can be used to associate a rule with an arbitrary type name. In future vscode might have commands which enable folding of all regions of a given type. At the moment this feature exists only for type "comment".
+This example also adds the `"type"` parameter. This can be used to associate a rule with an arbitrary type name. In future vscode might have commands which enable folding all regions of a given type. At the moment this feature exists only for type "comment".
 
 ## Multiple From/To Values
 ```json
@@ -122,6 +122,7 @@ The `"escape"` parameter defines the value(s) which can be used to place a strin
 A configuration for "C" folding rules:
 ```json
 "patternFolding": {
+	"lineContinue": "\\\\$",
     "rules": [
         {
             "foldFrom": ["{"],
@@ -151,6 +152,12 @@ A configuration for "C" folding rules:
         },
         {
             "commentFrom": ["//"],
+            "commentTo": ["$"],
+            "type": "comment",
+            "group": "comment"
+        },
+        {
+            "commentFrom": ["^\\s*#"],
             "commentTo": ["$"],
             "type": "comment",
             "group": "comment"
